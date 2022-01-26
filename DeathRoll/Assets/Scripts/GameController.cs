@@ -8,12 +8,13 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] private Text Text;
     [SerializeField] private Text TextShadow;
+    [SerializeField] private Text Range;
+    [SerializeField] private Text RangeShadow;
     [SerializeField] private GameObject RestartButton;
     [SerializeField] private GameObject RollButton;
 
-
     public int ceiling;
-    private int latestScore;
+    private int latestScore = 2;
     private bool isReadyToRestart = false;
     public void Start()
     {
@@ -22,6 +23,8 @@ public class GameController : MonoBehaviour
     ceiling = 100;
         Text.text = ceiling.ToString();
         TextShadow.text = ceiling.ToString();
+        Range.text = "Let's Roll!";
+        RangeShadow.text = "Let's Roll!";
     }
 
     private void Update()
@@ -34,60 +37,49 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                DeathRoll1();
+                DeathRoll();
             }
         }
     }
-    /*
         public void DeathRoll()
     {
-            latestScore = Random.Range(1, ceiling + 1);
-            ceiling = latestScore;
+        latestScore = Random.Range(0, ceiling + 1);
+        ceiling = latestScore;
+
         if (ceiling == 1)
         {
             Text.text = "1!!!!";
             TextShadow.text = "1!!!!";
+            Range.text = "Gotcha!";
+            RangeShadow.text = "Gotcha!";
             RollButton.SetActive(false);
 
             StartCoroutine(Wait());
+        }
+        else if (ceiling >1)
+        {
+            Text.text = latestScore.ToString();
+            TextShadow.text = latestScore.ToString();
+            Range.text = "( 0 - " + ceiling + " )";
+            RangeShadow.text = "( 0 - " + ceiling + " )";
         }
         else
         {
-            Text.text = latestScore.ToString();
-            TextShadow.text = latestScore.ToString();
-        }
-    }
-    */
-    public void DeathRoll1()
-    {
-        Debug.Log(ceiling);
-        int minusNum = Random.Range(0, 10);
-        Debug.Log(minusNum);
-        latestScore = ceiling - minusNum;
-
-        if (latestScore < 0)
-        {
-            latestScore = Mathf.Abs(latestScore);
-            ceiling = latestScore;
-
-            Text.text = latestScore.ToString();
-            TextShadow.text = latestScore.ToString();
-        }
-        else if (latestScore ==0)
-        {
-            Text.text = "1!!!!";
-            TextShadow.text = "1!!!!";
+            Text.text = "0";
+            TextShadow.text = "0";
+            Range.text = "Excluded!";
+            RangeShadow.text = "Excluded!";
             RollButton.SetActive(false);
 
             StartCoroutine(Wait());
         }
-        else if (latestScore >0)
-        {
-            ceiling = latestScore;
-            Text.text = latestScore.ToString();
-            TextShadow.text = latestScore.ToString();
-        }
     }
+    /*public void DeathRoll1()
+    {
+
+    Might try something fun here :D
+    
+    }*/
 
     public void RestartScene()
     {
@@ -100,4 +92,5 @@ public class GameController : MonoBehaviour
         RestartButton.SetActive(true);
         isReadyToRestart = true;
     }
+
 }
