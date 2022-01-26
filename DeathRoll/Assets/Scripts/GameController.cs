@@ -34,11 +34,12 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                DeathRoll();
+                DeathRoll1();
             }
         }
     }
-    public void DeathRoll()
+    /*
+        public void DeathRoll()
     {
             latestScore = Random.Range(1, ceiling + 1);
             ceiling = latestScore;
@@ -52,6 +53,37 @@ public class GameController : MonoBehaviour
         }
         else
         {
+            Text.text = latestScore.ToString();
+            TextShadow.text = latestScore.ToString();
+        }
+    }
+    */
+    public void DeathRoll1()
+    {
+        Debug.Log(ceiling);
+        int minusNum = Random.Range(0, 10);
+        Debug.Log(minusNum);
+        latestScore = ceiling - minusNum;
+
+        if (latestScore < 0)
+        {
+            latestScore = Mathf.Abs(latestScore);
+            ceiling = latestScore;
+
+            Text.text = latestScore.ToString();
+            TextShadow.text = latestScore.ToString();
+        }
+        else if (latestScore ==0)
+        {
+            Text.text = "1!!!!";
+            TextShadow.text = "1!!!!";
+            RollButton.SetActive(false);
+
+            StartCoroutine(Wait());
+        }
+        else if (latestScore >0)
+        {
+            ceiling = latestScore;
             Text.text = latestScore.ToString();
             TextShadow.text = latestScore.ToString();
         }
