@@ -31,6 +31,7 @@ public class GameController : MonoBehaviour
         _roll = GetComponent<AudioSource>();
     }
 
+    /*
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -46,6 +47,7 @@ public class GameController : MonoBehaviour
             }
         }
     }
+    */
         public void DeathRoll()
     {
         _roll.Play();
