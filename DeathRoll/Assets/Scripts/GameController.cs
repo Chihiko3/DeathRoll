@@ -12,12 +12,15 @@ public class GameController : MonoBehaviour
     [SerializeField] private Text RangeShadow;
     [SerializeField] private GameObject RestartButton;
     [SerializeField] private GameObject RollButton;
+    [SerializeField] private GameObject HuaQiang;
 
     public int ceiling;
     private int latestScore = 2;
     private bool isReadyToRestart = false;
+    private AudioSource _roll;
     public void Start()
     {
+        HuaQiang.SetActive(false);
         RestartButton.SetActive(false);
         RollButton.SetActive(true);
     ceiling = 100;
@@ -25,12 +28,14 @@ public class GameController : MonoBehaviour
         TextShadow.text = ceiling.ToString();
         Range.text = "Let's Roll!";
         RangeShadow.text = "Let's Roll!";
+        _roll = GetComponent<AudioSource>();
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            _roll.Play();
             if (isReadyToRestart == true && ceiling == 1)
             {
                 RestartScene();
@@ -43,6 +48,7 @@ public class GameController : MonoBehaviour
     }
         public void DeathRoll()
     {
+        _roll.Play();
         latestScore = Random.Range(0, ceiling + 1);
         ceiling = latestScore;
 
@@ -54,6 +60,7 @@ public class GameController : MonoBehaviour
             RangeShadow.text = "Gotcha!";
             RollButton.SetActive(false);
 
+            StartCoroutine(HuaQiangShow());
             StartCoroutine(Wait());
         }
         else if (ceiling >1)
@@ -88,9 +95,16 @@ public class GameController : MonoBehaviour
 
     private IEnumerator Wait()
     {
-        yield return new WaitForSeconds(0.75f);
+
+        yield return new WaitForSeconds(2f);
         RestartButton.SetActive(true);
         isReadyToRestart = true;
+    }
+
+    private IEnumerator HuaQiangShow()
+    {
+        HuaQiang.SetActive(true);
+        yield return new WaitForSeconds(1f);
     }
 
 }
