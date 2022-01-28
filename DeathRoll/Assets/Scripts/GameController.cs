@@ -53,35 +53,8 @@ public class GameController : MonoBehaviour
         _roll.Play();
         latestScore = Random.Range(0, ceiling + 1);
         ceiling = latestScore;
-
-        if (ceiling == 1)
-        {
-            Text.text = "1!!!!";
-            TextShadow.text = "1!!!!";
-            Range.text = "Gotcha!";
-            RangeShadow.text = "Gotcha!";
-            RollButton.SetActive(false);
-
-            StartCoroutine(HuaQiangShow());
-            StartCoroutine(Wait());
-        }
-        else if (ceiling >1)
-        {
-            Text.text = latestScore.ToString();
-            TextShadow.text = latestScore.ToString();
-            Range.text = "( 0 - " + ceiling + " )";
-            RangeShadow.text = "( 0 - " + ceiling + " )";
-        }
-        else
-        {
-            Text.text = "0";
-            TextShadow.text = "0";
-            Range.text = "Excluded!";
-            RangeShadow.text = "Excluded!";
-            RollButton.SetActive(false);
-
-            StartCoroutine(Wait());
-        }
+        StartCoroutine(DelayShow());
+        
     }
     /*public void DeathRoll1()
     {
@@ -98,7 +71,7 @@ public class GameController : MonoBehaviour
     private IEnumerator Wait()
     {
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
         RestartButton.SetActive(true);
         isReadyToRestart = true;
     }
@@ -107,6 +80,41 @@ public class GameController : MonoBehaviour
     {
         HuaQiang.SetActive(true);
         yield return new WaitForSeconds(1f);
+    }
+
+    private IEnumerator DelayShow()
+    {
+        yield return new WaitForSeconds(0.25f);
+
+        if (ceiling == 1)
+        {
+
+            Text.text = "1!!!!";
+            TextShadow.text = "1!!!!";
+            Range.text = "Gotcha!";
+            RangeShadow.text = "Gotcha!";
+            RollButton.SetActive(false);
+
+            StartCoroutine(HuaQiangShow());
+            StartCoroutine(Wait());
+        }
+        else if (ceiling > 1)
+        {
+            Text.text = latestScore.ToString();
+            TextShadow.text = latestScore.ToString();
+            Range.text = "( 0 - " + ceiling + " )";
+            RangeShadow.text = "( 0 - " + ceiling + " )";
+        }
+        else
+        {
+            Text.text = "0";
+            TextShadow.text = "0";
+            Range.text = "Excluded!";
+            RangeShadow.text = "Excluded!";
+            RollButton.SetActive(false);
+
+            StartCoroutine(Wait());
+        }
     }
 
 }
