@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject RestartButton;
     [SerializeField] private GameObject RollButton;
     [SerializeField] private GameObject HuaQiang;
+    [SerializeField] private GameObject Nice;
 
     public int ceiling;
     private int latestScore = 2;
@@ -20,6 +21,7 @@ public class GameController : MonoBehaviour
     private AudioSource _roll;
     public void Start()
     {
+        Nice.SetActive(false);
         HuaQiang.SetActive(false);
         RestartButton.SetActive(false);
         RollButton.SetActive(true);
@@ -82,6 +84,12 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(1f);
     }
 
+    private IEnumerator NiceShow()
+    {
+        Nice.SetActive(true);
+        yield return new WaitForSeconds(1f);
+    }
+
     private IEnumerator DelayShow()
     {
         yield return new WaitForSeconds(0.25f);
@@ -113,6 +121,7 @@ public class GameController : MonoBehaviour
             RangeShadow.text = "Excluded!";
             RollButton.SetActive(false);
 
+            StartCoroutine(NiceShow());
             StartCoroutine(Wait());
         }
     }
